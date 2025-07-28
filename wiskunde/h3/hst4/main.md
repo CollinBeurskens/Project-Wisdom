@@ -1,0 +1,5 @@
+- [4.1 - Procentuele veranderingen](?md=/wiskunde/h3/hst4/p1.md)
+- [4.2 - Rekenen met procenten](?md=/wiskunde/h3/hst4/p2.md)
+- [4.3 - Informatieverwerking](?md=/wiskunde/h3/hst4/p3.md)
+- [4.4 - Misleidende statistiek](?md=/wiskunde/h3/hst4/p4.md)
+- [4.5 - Interpoleren en extrapoleren](?md=/wiskunde/h3/hst4/p5.md)

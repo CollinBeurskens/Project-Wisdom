@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Wisdom</title>
+    
+    <!-- Marked.js voor Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Polyfills voor oudere browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <!-- MathJax Configuratie -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true,
+                autoload: {
+                    color: [],
+                    ams: ['frac', 'sqrt']
+                }
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            startup: {
+                ready: () => {
+                    console.log("MathJax is klaar!");
+                    MathJax.startup.defaultReady();
+                    if (typeof MathJax.typesetPromise === 'function') {
+                        MathJax.typesetPromise();
+                    } else {
+                        console.warn("MathJax.typesetPromise bestaat niet!");
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- MathJax v3 van CDN (correcte versie!) -->
+    <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Styling -->
+    <style>
+        :root {
+            --main-font-size: 1rem;
+            --line-height: 1.6;
+            --content-width: 90%;
+            --max-content-width: 800px;
+            --padding: 1rem;
+            --table-padding: 0.5rem;
+        }
+
+        body {
+            width: var(--content-width);
+            max-width: var(--max-content-width);
+            margin: 0 auto;
+            padding: var(--padding);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: var(--line-height);
+            color: #333;
+            font-size: var(--main-font-size);
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 1em 0;
+            width: 100%;
+            overflow-x: auto;
+            display: block;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: var(--table-padding);
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        pre, code {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --main-font-size: 0.95rem;
+                --padding: 0.8rem;
+                --table-padding: 0.4rem;
+            }
+
+            body {
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --main-font-size: 0.9rem;
+                --padding: 0.6rem;
+                --table-padding: 0.3rem;
+            }
+
+            body {
+                width: 98%;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+      <a href="/" style="text-decoration: none; color: inherit;">
+        <h1>Project Wisdom</h1>
+      </a>
+      <img 
+        src="/collin.png" 
+        alt="Collin" 
+        style="width: 200px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+      >
+      <p style="font-style: italic;">Een lichtgewicht, kosteloos alternatief voor StudyGo.</p>
+      <p style="font-style: italic;">Gemaakt door <a href="https://www.github.com/Collinbeurskens" >Captain Eugene</a></p>
+      <hr style="border: 1px solid gray;">
+    </div>
+
+    <div id="markdown-content"></div>
+
+    <script>
+        marked.setOptions({
+            breaks: true,
+            gfm: true,
+            mangle: false,
+            headerIds: false,
+        });
+
+        const params = new URLSearchParams(window.location.search);
+        const mdFile = params.get('md') || 'main.md';
+
+        fetch(mdFile)
+            .then(response => {
+                if (!response.ok) throw new Error('File not found');
+                return response.text();
+            })
+            .then(markdown => {
+                document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+                if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
+                    MathJax.typesetPromise();
+                }
+            })
+            .catch(error => {
+                document.getElementById('markdown-content').innerHTML = 
+                    `<p style="color:red">Error loading ${mdFile}: ${error.message}</p>`;
+            });
+    </script>
+</body>
+</html>
