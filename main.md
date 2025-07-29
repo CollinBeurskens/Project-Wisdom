@@ -15,3 +15,11 @@ Begin vandaag nog en ontdek een slimmere manier om te studeren!
 <a href="?md=index.md" style="text-decoration: underline;">
     <h2>Begin met leren!</h2>
 </a>
+
+<br>
+
+---
+
+Nog meer paginas :
+- [Credits](?md=/nogmeerpaginas/credits.md)
+- [Plannen](?md=/nogmeerpaginas/plannen.md)

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Wisdom</title>
+    <link rel="icon" type="image/x-icon" href="/collin.png">
     
     <!-- Marked.js voor Markdown rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -48,7 +49,7 @@
     <!-- Styling -->
     <style>
         :root {
-            --main-font-size: 1rem;
+            --main-font-size: 1.2rem;
             --line-height: 1.6;
             --content-width: 90%;
             --max-content-width: 800px;
@@ -95,6 +96,26 @@
             word-wrap: break-word;
         }
 
+        /* Improved emoji styling */
+        .emoji {
+            width: 1.2em;
+            height: 1.2em;
+            vertical-align: middle;
+            margin: -0.2em 0.1em;
+            display: inline-block;
+            object-fit: contain;
+        }
+
+        /* Better alignment for text with emojis */
+        p, li, td, th {
+            line-height: 1.8;
+        }
+
+        /* Headers with emojis */
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.4;
+        }
+
         @media (max-width: 768px) {
             :root {
                 --main-font-size: 0.95rem;
@@ -104,6 +125,11 @@
 
             body {
                 width: 95%;
+            }
+
+            .emoji {
+                width: 1.1em;
+                height: 1.1em;
             }
         }
 
@@ -120,6 +146,11 @@
 
             table {
                 font-size: 0.85rem;
+            }
+
+            .emoji {
+                width: 1em;
+                height: 1em;
             }
         }
     </style>
@@ -154,18 +185,27 @@
 
         fetch(mdFile)
             .then(response => {
-                if (!response.ok) throw new Error('File not found');
+                if (!response.ok) throw new Error('<br><br>Dit bestand is momenteel niet beschikbaar of bestaat niet.<br><p style="font-style: italic;">(Geen zorgen, ik ben er mee bezig)</p><img src="/Images/emojis/tiredofthisshit.png" alt="tired of this shit" width="60" height="60">');
                 return response.text();
             })
             .then(markdown => {
-                document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+                // Parse markdown to HTML
+                let html = marked.parse(markdown);
+
+                // Replace all [:emoji_name:] with <img> tags for custom emojis
+                html = html.replace(/\[:([a-zA-Z0-9_+-]+):\]/g, (match, emojiName) => {
+                    return `<img src="Images/emojis/${emojiName}.png" alt="${emojiName}" class="emoji">`;
+                });
+
+                document.getElementById('markdown-content').innerHTML = html;
+
                 if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
                     MathJax.typesetPromise();
                 }
             })
             .catch(error => {
                 document.getElementById('markdown-content').innerHTML = 
-                    `<p style="color:red">Error loading ${mdFile}: ${error.message}</p>`;
+                    `<p style="color:red"><img src="/Images/emojis/whyucrying.png" alt="sad emoji" width="30" height="30">Oeps... Een fout bij het laden van ${mdFile}: ${error.message}</p>`;
             });
     </script>
 </body>
