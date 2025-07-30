@@ -1,4 +1,0 @@
-- [Hoofdstuk 1 - Lineaire Problemen](?md=/wiskunde/h3/hst1/main.md)
-- [Hoofdstuk 2 - Gelijkvormigheid](?md=/wiskunde/h3/hst2/main.md)
-- [Hoofdstuk 3 - Kwadratische Problemen](?md=/wiskunde/h3/hst3/main.md)
-- [Hoofdstuk 4 - Procenten en statistiek](?md=/wiskunde/h3/hst4/main.md)
